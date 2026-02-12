@@ -1,125 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Liveankon</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liveankon Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cyan: #00ffff;
+      --bg: #06090d;
+      --panel: rgba(8, 16, 24, 0.78);
+      --muted: #9db2c2;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
 
-html,body{
-  width:100%;
-  height:100%;
-}
+    body {
+      font-family: "Orbitron", sans-serif;
+      color: white;
+      background: radial-gradient(circle at top, #0a0f14 0%, #000 70%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: hidden;
+    }
 
-body{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:'Orbitron',sans-serif;
-  background:radial-gradient(circle at top, #0a0f14, #000 70%);
-  overflow:hidden;
-  color:white;
-}
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
 
-/* PARTICLES */
-canvas{
-  position:fixed;
-  inset:0;
-  z-index:0;
-}
+    .float-particles {
+      list-style: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-/* CARD */
-.card{
-  position:relative;
-  z-index:2;
-  width:90%;
-  max-width:520px;
-  padding:45px 30px;
-  text-align:center;
-  background:rgba(10,15,20,0.75);
-  border-radius:20px;
-  backdrop-filter:blur(14px);
-  box-shadow:
-    0 0 40px rgba(0,255,255,0.25),
-    inset 0 0 25px rgba(0,255,255,0.08);
-}
+    .float-particles li {
+      position: absolute;
+      display: block;
+      bottom: -140px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.18);
+      border: 1px solid rgba(0, 255, 255, 0.35);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+      animation: floatUp linear infinite;
+    }
 
-/* NAME */
-.name{
-  font-size:3rem;
-  color:#00ffff;
-  text-shadow:
-    0 0 10px #00ffff,
-    0 0 30px #00ffff;
-}
+    .float-particles li:nth-child(1) {
+      left: 8%;
+      animation-duration: 11s;
+      animation-delay: 0s;
+      width: 12px;
+      height: 12px;
+    }
 
-/* BIO */
-.bio{
-  margin-top:14px;
-  font-size:0.95rem;
-  line-height:1.5;
-  opacity:0.8;
-}
+    .float-particles li:nth-child(2) {
+      left: 18%;
+      animation-duration: 14s;
+      animation-delay: 1s;
+      width: 20px;
+      height: 20px;
+    }
 
-/* ICONS */
-.links{
-  margin-top:22px;
-}
+    .float-particles li:nth-child(3) {
+      left: 30%;
+      animation-duration: 10s;
+      animation-delay: 3s;
+    }
 
-.links a{
-  margin:0 12px;
-  font-size:1.4rem;
-  color:#ccc;
-  text-decoration:none;
-  transition:0.25s;
-}
+    .float-particles li:nth-child(4) {
+      left: 42%;
+      animation-duration: 16s;
+      animation-delay: 0.5s;
+      width: 24px;
+      height: 24px;
+    }
 
-.links a:hover{
-  color:#00ffff;
-  text-shadow:0 0 12px #00ffff;
-}
+    .float-particles li:nth-child(5) {
+      left: 56%;
+      animation-duration: 9s;
+      animation-delay: 2s;
+      width: 14px;
+      height: 14px;
+    }
 
-/* MUSIC BUTTON */
-.music-btn{
-  margin-top:26px;
-  padding:12px 32px;
-  border:none;
-  border-radius:999px;
-  background:#00ffff;
-  color:#000;
-  font-size:0.9rem;
-  cursor:pointer;
-  box-shadow:0 0 25px rgba(0,255,255,0.7);
-  transition:0.25s;
-}
+    .float-particles li:nth-child(6) {
+      left: 68%;
+      animation-duration: 13s;
+      animation-delay: 4s;
+    }
 
-.music-btn:hover{
-  transform:scale(1.05);
-}
+    .float-particles li:nth-child(7) {
+      left: 78%;
+      animation-duration: 12s;
+      animation-delay: 1.7s;
+      width: 22px;
+      height: 22px;
+    }
 
-/* MOBILE */
-@media(max-width:600px){
-  .name{font-size:2.2rem;}
-  .card{padding:35px 22px;}
-}
-</style>
+    .float-particles li:nth-child(8) {
+      left: 88%;
+      animation-duration: 15s;
+      animation-delay: 2.6s;
+      width: 16px;
+      height: 16px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-115vh) translateX(45px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      width: min(92vw, 560px);
+      z-index: 2;
+      border-radius: 20px;
+      padding: 32px;
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.2), inset 0 0 24px rgba(0, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 255, 0.25);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--cyan);
+      text-shadow: 0 0 12px var(--cyan), 0 0 26px rgba(0, 255, 255, 0.8);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(157, 178, 194, 0.18);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .value {
+      color: var(--cyan);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .ticker {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 255, 0.28);
+      background: rgba(0, 255, 255, 0.06);
+      font-size: 0.9rem;
+      color: #dff;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.35s ease;
+    }
+
+    .ticker.fade {
+      opacity: 0.45;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #2af57b;
+      box-shadow: 0 0 10px #2af57b;
+      animation: pulse 1.3s infinite;
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.25);
+        opacity: 0.65;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .card {
+        padding: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <canvas id="particles"></canvas>
+  <ul class="float-particles" aria-hidden="true">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
 
-<canvas id="particles"></canvas>
+  <main class="card">
+    <h1>Liveankon</h1>
+    <p class="subtitle">Live updating portal • time, status and activity feed refresh in real time.</p>
 
-<div class="card">
-  <div class="name">Liveankon</div>
+    <section class="grid">
+      <article class="panel">
+        <p class="label">Local Time</p>
+        <p id="clock" class="value">--:--:--</p>
+      </article>
+      <article class="panel">
+        <p class="label">Portal Status</p>
+        <p class="value status"><span class="dot" aria-hidden="true"></span><span>Online</span></p>
+      </article>
+      <article class="panel" style="grid-column: 1 / -1;">
+        <p class="label">Last Sync</p>
+        <p id="sync" class="value">Waiting for first update...</p>
+      </article>
+    </section>
 
-  <div class="bio">
-    Some feelings don’t need names.<br>
-    Quiet hearts feel
+    <div id="ticker" class="ticker">Boot sequence complete. Monitoring live signals…</div>
+  </main>
+
+  <script>
+    const clockEl = document.getElementById("clock");
+    const syncEl = document.getElementById("sync");
+    const tickerEl = document.getElementById("ticker");
+
+    const feed = [
+      "Heartbeat detected from edge node A-13.",
+      "New visitor session established.",
+      "Background diagnostics: all systems stable.",
+      "Portal visuals refreshed successfully.",
+      "Realtime channel latency nominal (24ms)."
+    ];
+
+    function updateClock() {
+      const now = new Date();
+      clockEl.textContent = now.toLocaleTimeString();
+      syncEl.textContent = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+    }
+
+    let index = 0;
+    function rotateFeed() {
+      tickerEl.classList.add("fade");
+      setTimeout(() => {
+        tickerEl.textContent = feed[index % feed.length];
+        tickerEl.classList.remove("fade");
+        index += 1;
+      }, 180);
+    }
+
+    updateClock();
+    rotateFeed();
+    setInterval(updateClock, 1000);
+    setInterval(rotateFeed, 3000);
+
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particles = Array.from({ length: 90 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.6 + 0.4,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(0,255,255,0.75)";
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    draw();
+  </script>
+</body>
+</html>
